@@ -1,0 +1,6 @@
+.idea/
+pyvenv.cfg
+discord.log
+*.pyc
+*.sh
+
