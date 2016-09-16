@@ -42,6 +42,10 @@ class Digis(Plugin):
             {
                 'name': '!colorsearch query',
                 'description': 'Search for colorations with names containing your query'
+            },
+            {
+                'name': '!itemcount item_id',
+                'description': 'See how many of a given item exist across Digis users'
             }
         ]
         return commands
@@ -230,5 +234,24 @@ class Digis(Plugin):
             )
         if len(result) > 0:
             response += info_template
+
+        await self.bot.send_message(message.channel, response)
+
+    @command(pattern='^!itemcount #?([0-9]*)$')
+    async def item_count(self, message, args):
+        item_id = args[0]
+        data = await self._api_get('itemcount', item_id)
+
+        response_template = "Hmm... let's see...\n" +\
+                            "I found {0} {1}{2} among all users!"
+
+        if data['success'] is False:
+            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            await self.bot.send_message(message.channel, response)
+            return
+        result = data['result']
+        response = response_template.format(
+            result['num_items'], result['iName'], "'" if result['iName'].endswith('s') else "s"
+        )
 
         await self.bot.send_message(message.channel, response)
