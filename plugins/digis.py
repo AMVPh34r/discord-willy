@@ -287,6 +287,10 @@ class Digis(Plugin):
             ),
             "news": "Check out the latest Digis news updates!\n{0}".format(
                 BASE_URL + "p_news.php"
+            ),
+            "petprices": "Pets start at {0} GCC, and the price increases as you obtain more pets. The equation for pet "
+                         "cost is `{1}`, and there is a cap of {2} GCC.".format(
+                200, "(D²+1)*200", "20k"
             )
         }
 
