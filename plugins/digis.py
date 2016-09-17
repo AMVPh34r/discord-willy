@@ -279,14 +279,20 @@ class Digis(Plugin):
             "interest": "Bank interest rates begin at {0}%, and decrease for higher bank balances, to a minimum "
                         "of {1}%.".format(
                 8, 4
+            ),
+            "staff": "Here's a list of all the current Digis staff members! Aren't they all wonderful?\n{0}".format(
+                BASE_URL + "p_staff.php"
+            ),
+            "news": "Check out the latest Digis news updates!\n{0}".format(
+                BASE_URL + "p_news.php"
             )
         }
 
         if question in faqs.keys():
             response = faqs[question]
         else:
-            response_template = "Sorry! I couldn't find an answer for you. You might have better luck reading " +\
-                "through the FAQ page online: {0}"
+            response_template = "Sorry! I couldn't find an answer for you. You might have better luck reading "\
+                                "through the FAQ page online: {0}"
             response = response_template.format(
                 BASE_URL + "p_help_faq.php"
             )
