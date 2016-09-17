@@ -71,7 +71,7 @@ class Digis(Plugin):
         user_id = args[0]
         data = await self._api_get('userinfo', user_id)
 
-        response_template = "Info for user #{0}:\n" +\
+        response_template = "Here's what I could dig up on user #{0}:\n" +\
             "**Username:** {1}\n" +\
             "**Profile Link:** {2}p_user_profile.php?ID={3}\n" +\
             "**Forum Posts:** {2}forum_history_user.php?ID={3}"
@@ -94,9 +94,9 @@ class Digis(Plugin):
         query = args[0]
         data = await self._api_get('usersearch', query)
 
-        response_template = "{0} results for \"{1}\"{2}"
+        response_template = "I found {0} results for \"{1}\"{2}"
         result_template = "    {0} (#{1})\n"
-        info_template = "Enter `!userinfo USER_ID` for more."
+        info_template = "Tell me `!userinfo USER_ID` if you want more info!"
 
         if data['success'] is False:
             response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
@@ -145,9 +145,9 @@ class Digis(Plugin):
         query = args[0]
         data = await self._api_get('itemsearch', query)
 
-        response_template = "{0} results for \"{1}\"{2}"
+        response_template = "I've got {0} results for \"{1}\"{2}"
         result_template = "    {0} (#{1})\n"
-        info_template = "Enter `!iteminfo ITEM_ID` for more."
+        info_template = "Send `!iteminfo ITEM_ID` for more."
 
         if data['success'] is False:
             response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
@@ -204,9 +204,9 @@ class Digis(Plugin):
         query = args[0]
         data = await self._api_get('colorsearch', query)
 
-        response_template = "{0} results for \"{1}\"{2}"
+        response_template = "Looks like we have {0} results for \"{1}\"{2}"
         result_template = "    {0} (#{1})\n"
-        info_template = "Enter `!colorinfo COLOR_ID` for more."
+        info_template = "Tell me `!colorinfo COLOR_ID` for more info!"
 
         if data['success'] is False:
             response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
