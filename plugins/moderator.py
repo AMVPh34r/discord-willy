@@ -10,8 +10,27 @@ logs = logging.getLogger("discord")
 
 
 class Moderator(Plugin):
+    @staticmethod
+    async def get_commands(server):
+        commands = [
+            {
+                'name': '!clear [user] num',
+                'description': 'Delete the last `num` messages. Optionally, out of the last `num` messages, delete '
+                               'all made by `user`.'
+            },
+            {
+                'name': '!mute user',
+                'description': 'Mutes a user, preventing them from sending messages.'
+            },
+            {
+                'name': '!unmute user',
+                'description': 'Unmutes a muted user, allowing them to send messages.'
+            }
+        ]
+        return commands
 
-    async def check_auth(self, member):
+    @staticmethod
+    async def check_auth(member):
         # Check if the author if authorized
         role_names = ['moderator']
         authorized = False
@@ -49,11 +68,8 @@ class Moderator(Plugin):
 
         await self.bot.delete_message(confirm_message)
 
-    @command(pattern='^!clear <@!?([0-9]*)>$', require_one_of_roles="roles")
+    @command(pattern='^!clear <@!?([0-9]*)> ([0-9]*)$', require_one_of_roles="roles")
     async def clear_user(self, message, args):
-        if True:
-            return
-        # TODO require a second argument for maximum number of messages by this user to delete (currently too dangerous)
         member = message.author
         check = await self.check_auth(member)
         if not check:
@@ -63,9 +79,11 @@ class Moderator(Plugin):
         user = message.mentions[0]
         if not user:
             return
+        del_limit = int(args[1])
 
         deleted_messages = await self.bot.purge_from(
             message.channel,
+            limit=del_limit,
             check=lambda m: m.author.id == user.id or m == message
         )
 
