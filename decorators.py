@@ -33,6 +33,8 @@ def bg_task(sleep_time, ignore_errors=True):
 
 
 def command(pattern=None, db_check=False, user_check=None, db_name=None,
+            require_role="", require_one_of_roles="", banned_role="",
+            banned_roles="", cooldown=0, global_cooldown=0,
             description="", usage=None):
     def actual_decorator(func):
         name = func.__name__
