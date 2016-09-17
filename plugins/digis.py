@@ -62,18 +62,7 @@ class Digis(Plugin):
     async def info(self, message, args):
         response = "Hi! I'm Digi Land's very own Willy! I decided to join the Discord server here in order to help " +\
                    "out with some tasks and provide quick access to information on the world of Digis right here!" +\
-                   "\n\nHere's a quick rundown of what I can do now (and I'm always learning new tricks):\n"
-        response += "`!userinfo USER_ID` Give me the ID number of a Digis user and I can display some basic " +\
-                    "profile information about them, as well as some helpful links. Not sure what a user's ID is? " +\
-                    "Don't worry!\n"
-        response += "`!usersearch QUERY` Give me all or part of someone's username and I can fetch their ID for you!\n"
-        response += "`!iteminfo ITEM_ID` Given an item's ID, I'll display that item's name and information!\n"
-        response += "`!itemsearch QUERY` Just like with users, I can help you track down an item if you don't know " +\
-                    "its ID or full name!\n"
-        response += "`!colorinfo COLOR_ID` Want to see how a certain pet coloration looks? Just holler and I'll " +\
-                    "give you some beautiful pictures as well as information on the coloration of your choice!\n"
-        response += "`!colorsearch QUERY` And of course if you don't know the coloration's ID off the top of your " +\
-                    "head (I certainly don't blame you), I can help you find it here!"
+                   "\n\nWant to know what I'm capable of? Just enter `!help` for a list of commands I know!\n"
 
         await self.bot.send_message(message.channel, response)
 
