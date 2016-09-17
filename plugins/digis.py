@@ -45,6 +45,14 @@ class Digis(Plugin):
             {
                 'name': '!itemcount item_id',
                 'description': 'See how many of a given item exist across Digis users'
+            },
+            {
+                'name': '!rules',
+                'description': 'Get a quick link to the Digis rules and ToS'
+            },
+            {
+                'name': '!faq [topic]',
+                'description': 'Get an answer to a frequently asked question, or a link to the online FAQ page'
             }
         ]
         return commands
