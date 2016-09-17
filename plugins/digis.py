@@ -11,9 +11,10 @@ API_URL = BASE_URL + 'api.php?key=' + API_KEY + '&'
 
 
 class Digis(Plugin):
-    fancy_name='Digis API'
+    fancy_name = 'Digis API'
 
-    async def get_commands(self, server):
+    @staticmethod
+    async def get_commands(server):
         commands = [
             {
                 'name': '!info',
@@ -50,7 +51,8 @@ class Digis(Plugin):
         ]
         return commands
 
-    async def _api_get(self, method, query):
+    @staticmethod
+    async def _api_get(method, query):
         with aiohttp.ClientSession() as session:
             async with session.get(API_URL, params={"c": method,
                                                     "s": query,

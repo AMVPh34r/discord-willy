@@ -3,8 +3,8 @@ from plugin import Plugin
 
 log = logging.getLogger('discord')
 
-class PluginManager:
 
+class PluginManager:
     def __init__(self, bot):
         self.bot = bot
         self.bot.plugins = []

@@ -39,10 +39,11 @@ class Help(Plugin):
 
         return self.render_message(help_payload)
 
-    def render_message(self, help_payload):
+    @staticmethod
+    def render_message(help_payload):
         message_batches = [""]
         for plugin_info in help_payload:
-            if plugin_info['commands'] != []:
+            if plugin_info['commands']:
                 message = "**{}**\n".format(plugin_info['fancy_name'])
                 if len(message_batches[-1] + message) > 2000:
                     message_batches.append(message)
