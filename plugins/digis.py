@@ -60,8 +60,8 @@ class Digis(Plugin):
 
     @command(pattern='^!info$')
     async def info(self, message, args):
-        response = "Hi! I'm Digi Land's very own Willy! I decided to join the Discord server here in order to help " +\
-                   "out with some tasks and provide quick access to information on the world of Digis right here!" +\
+        response = "Hi! I'm Digi Land's very own Willy! I decided to join the Discord server here in order to help " \
+                   "out with some tasks and provide quick access to information on the world of Digis right here!" \
                    "\n\nWant to know what I'm capable of? Just enter `!help` for a list of commands I know!\n"
 
         await self.bot.send_message(message.channel, response)
@@ -71,10 +71,10 @@ class Digis(Plugin):
         user_id = args[0]
         data = await self._api_get('userinfo', user_id)
 
-        response_template = "Here's what I could dig up on user #{0}:\n" +\
-            "**Username:** {1}\n" +\
-            "**Profile Link:** {2}p_user_profile.php?ID={3}\n" +\
-            "**Forum Posts:** {2}forum_history_user.php?ID={3}"
+        response_template = "Here's what I could dig up on user #{0}:\n" \
+                            "**Username:** {1}\n" \
+                            "**Profile Link:** {2}p_user_profile.php?ID={3}\n" \
+                            "**Forum Posts:** {2}forum_history_user.php?ID={3}"
 
         if data['success'] is False:
             response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
@@ -121,10 +121,10 @@ class Digis(Plugin):
         item_id = args[0]
         data = await self._api_get('iteminfo', item_id)
 
-        response_template = "__{0}__\n" +\
-            "**Item Description:** {1}\n" +\
-            "**Artist:** {2} (#{3})\n" +\
-            "**Price:** {4}{5}"
+        response_template = "__{0}__\n" \
+                            "**Item Description:** {1}\n" \
+                            "**Artist:** {2} (#{3})\n" \
+                            "**Price:** {4}{5}"
 
         if data['success'] is False:
             response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
@@ -178,12 +178,12 @@ class Digis(Plugin):
             'C': 'Coffee',
             'Z': 'Zafrii'
         }
-        response_template = "__{0}__\n" +\
-            "**Species:** {1}\n" +\
-            "**Artist:** {2} (#{3})\n" +\
-            "**Images:** \n" +\
-            "{4}pets/pet_{5}Fb.png\n" +\
-            "{4}pets/pet_{5}Mb.png"
+        response_template = "__{0}__\n" \
+                            "**Species:** {1}\n" \
+                            "**Artist:** {2} (#{3})\n" \
+                            "**Images:** \n" \
+                            "{4}pets/pet_{5}Fb.png\n" \
+                            "{4}pets/pet_{5}Mb.png"
 
         if data['success'] is False:
             response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
@@ -231,7 +231,7 @@ class Digis(Plugin):
         item_id = args[0]
         data = await self._api_get('itemcount', item_id)
 
-        response_template = "Hmm... let's see...\n" +\
+        response_template = "Hmm... let's see...\n" \
                             "I found {0} {1}{2} among all users!"
 
         if data['success'] is False:
