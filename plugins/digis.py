@@ -2,7 +2,6 @@ import aiohttp
 import os
 from plugin import Plugin
 from decorators import command
-from bs4 import BeautifulSoup
 
 API_KEY = os.getenv('DIGIS_API_KEY')
 BASE_URL = 'http://yaydigis.net/'
@@ -241,6 +240,18 @@ class Digis(Plugin):
         result = data['result']
         response = response_template.format(
             result['num_items'], result['iName'], "'" if result['iName'].endswith('s') else "s"
+        )
+
+        await self.bot.send_message(message.channel, response)
+
+    @command(pattern='^!rules$')
+    async def rules(self, message, args):
+        response_template = "Don't forget to read up on the Digis rules and ToS!\n" +\
+            "{0}\n" +\
+            "{1}"
+        response = response_template.format(
+            "http://yaydigis.net/p_rules.php",
+            "http://yaydigis.net/p_ToS.php"
         )
 
         await self.bot.send_message(message.channel, response)
