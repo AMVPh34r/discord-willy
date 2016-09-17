@@ -79,7 +79,9 @@ class Digis(Plugin):
                             "**Forum Posts:** {2}forum_history_user.php?ID={3}"
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -101,7 +103,9 @@ class Digis(Plugin):
         info_template = "Tell me `!userinfo USER_ID` if you want more info!"
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -129,7 +133,9 @@ class Digis(Plugin):
                             "**Price:** {4}{5}"
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -152,7 +158,9 @@ class Digis(Plugin):
         info_template = "Send `!iteminfo ITEM_ID` for more."
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -188,7 +196,9 @@ class Digis(Plugin):
                             "{4}pets/pet_{5}Mb.png"
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -211,7 +221,9 @@ class Digis(Plugin):
         info_template = "Tell me `!colorinfo COLOR_ID` for more info!"
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -237,7 +249,9 @@ class Digis(Plugin):
                             "I found {0} {1}{2} among all users!"
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
