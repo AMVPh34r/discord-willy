@@ -267,12 +267,6 @@ class Digis(Plugin):
     @command(pattern='^!faq ?(.*)$')
     async def faq(self, message, args):
         question = args[0].lower()
-        if question == "":
-            response = "You can read up on the site FAQ here!\n{0}".format(
-                BASE_URL + "p_help_faq.php"
-            )
-            await self.bot.send_message(message.channel, response)
-            return
 
         faqs = {
             "trading": "Digi trading costs {0} GCC for a standard trade and {1} GCC for a one-way trade.".format(
@@ -296,10 +290,17 @@ class Digis(Plugin):
             )
         }
 
-        if question in faqs.keys():
+        if question == "":
+            response = "Here's a list of FAQ topics I can tell you about (just send me `!faq topic` for more):\n" \
+                       "`{0}`\n" \
+                       "You can read up on the site FAQ here: {1}".format(
+                            ', '.join(sorted(faqs.keys())),
+                            BASE_URL + "p_help_faq.php"
+                        )
+        elif question in faqs.keys():
             response = faqs[question]
         else:
-            response_template = "Sorry! I couldn't find an answer for you. You might have better luck reading "\
+            response_template = "Sorry! I couldn't find an answer for you. You might have better luck reading " \
                                 "through the FAQ page online: {0}"
             response = response_template.format(
                 BASE_URL + "p_help_faq.php"
