@@ -3,6 +3,7 @@ import os
 import logging
 
 from plugins.help import Help
+from plugins.info import Info
 from plugins.digis import Digis
 
 # Global plugins
