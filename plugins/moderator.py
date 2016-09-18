@@ -18,11 +18,11 @@ class Moderator(Plugin):
             },
             {
                 'name': '!mute user',
-                'description': 'Mutes a user, preventing them from sending messages.'
+                'description': 'Mutes a user, preventing them from sending messages in the current channel.'
             },
             {
                 'name': '!unmute user',
-                'description': 'Unmutes a muted user, allowing them to send messages.'
+                'description': 'Unmutes a muted user, allowing them to send messages in the current channel.'
             }
         ]
         return commands
