@@ -1,10 +1,7 @@
-from plugin import Plugin
-from functools import wraps
-from decorators import command
-
 import logging
 import asyncio
-import re
+from plugin import Plugin
+from decorators import command
 
 logs = logging.getLogger("discord")
 
@@ -98,8 +95,8 @@ class Moderator(Plugin):
 
     @command(pattern='^!mute <@!?([0-9]*)>$', require_one_of_roles="roles")
     async def mute(self, message, args):
-        member = message.author
-        check = await self.check_auth(member)
+        user = message.author
+        check = await self.check_auth(user)
         if not check:
             return
         if not message.mentions:
@@ -109,15 +106,12 @@ class Moderator(Plugin):
         if check:
             return
 
-        allow, deny = message.channel.overwrites_for(member)
-        allow.send_messages = False
-        deny.send_messages = True
+        overwrite = message.channel.overwrites_for(member)
+        overwrite.send_messages = False
         await self.bot.edit_channel_permissions(
             message.channel,
             member,
-            allow=allow,
-            deny=deny
-        )
+            overwrite)
         await self.bot.send_message(
             message.channel,
             "{} is now muted in this channel.".format(member.mention)
@@ -125,8 +119,8 @@ class Moderator(Plugin):
 
     @command(pattern='^!unmute <@!?([0-9]*)>$', require_one_of_roles="roles")
     async def unmute(self, message, args):
-        member = message.author
-        check = await self.check_auth(member)
+        user = message.author
+        check = await self.check_auth(user)
         if not check:
             return
         if not message.mentions:
@@ -137,15 +131,12 @@ class Moderator(Plugin):
         if check:
             return
 
-        allow, deny = message.channel.overwrites_for(member)
-        allow.send_messages = True
-        deny.send_messages = False
+        overwrite = message.channel.overwrites_for(member)
+        overwrite.send_messages = None
         await self.bot.edit_channel_permissions(
             message.channel,
             member,
-            allow=allow,
-            deny=deny
-        )
+            overwrite)
         await self.bot.send_message(
             message.channel,
             "{} is no longer muted in this channel.".format(member.mention)
