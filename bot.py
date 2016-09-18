@@ -7,6 +7,7 @@ from plugins.digis import Digis
 
 # Global plugins
 from plugins.basiclogs import BasicLogs
+from plugins.botgame import BotGame
 
 token = os.getenv('BOT_TOKEN')
 bot_debug = os.getenv('BOT_DEBUG')

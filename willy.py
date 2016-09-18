@@ -26,8 +26,6 @@ class Willy(discord.Client):
         self.loop.run_until_complete(self.start(*args))
 
     async def on_ready(self):
-        await self.change_status(game=discord.Game(name='in Digi Land'))
-
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_ready())
 
