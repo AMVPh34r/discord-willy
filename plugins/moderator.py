@@ -155,8 +155,15 @@ class Moderator(Plugin):
                 await self.bot.delete_message(message)
                 msg = await self.bot.send_message(
                     message.channel,
-                    "{}, **LANGUAGE!!!**😡".format(
+                    "{}, **LANGUAGE!**".format(
                         message.author.mention
+                    )
+                )
+                await self.bot.send_message(
+                    message.author,
+                    "Sorry! Your message was removed for containing a word in our filter. Here's what you wrote, in "
+                    "case you would like to edit and re-send it:\n```\n{0}\n```".format(
+                        message.content
                     )
                 )
                 await asyncio.sleep(3)
