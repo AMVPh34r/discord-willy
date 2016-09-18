@@ -291,6 +291,10 @@ class Digis(Plugin):
             "petprices": "Pets start at {0} GCC, and the price increases as you obtain more pets. The equation for pet "
                          "cost is `{1}`, and there is a cap of {2} GCC.".format(
                 200, "(D²+1)*200", "20k"
+            ),
+            "botidea": "Got a feature idea or request for the bot? Let us know via the GitHub issue tracker!\n"
+                       "{0}".format(
+                "https://github.com/AMVPh34r/discord-willy/issues"
             )
         }
 
