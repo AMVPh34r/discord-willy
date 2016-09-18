@@ -7,7 +7,9 @@ from bs4 import BeautifulSoup
 API_KEY = os.getenv('DIGIS_API_KEY')
 BASE_URL = 'http://yaydigis.net/'
 CDN_URL = 'http://cdn.yaydigis.net/'
-API_URL = BASE_URL + 'api.php?key=' + API_KEY + '&'
+API_URL = '{0}api.php?key={1}&'.format(
+    BASE_URL, API_KEY
+)
 
 
 class Digis(Plugin):
