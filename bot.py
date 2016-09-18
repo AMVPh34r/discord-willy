@@ -5,6 +5,7 @@ import logging
 from plugins.help import Help
 from plugins.info import Info
 from plugins.digis import Digis
+from plugins.moderator import Moderator
 
 # Global plugins
 from plugins.basiclogs import BasicLogs
