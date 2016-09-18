@@ -2,6 +2,7 @@ import discord
 import logging
 from plugin_manager import PluginManager
 
+APP_NAME = "Willy Bot"
 APP_VERSION = "1.0.1"
 APP_AUTHOR = "Alex Schaeffer"
 
@@ -14,6 +15,7 @@ class Willy(discord.Client):
         self.plugin_manager = PluginManager(self)
         self.plugin_manager.load_all()
         self.last_messages = []
+        self.__name__ = APP_NAME
         self.__version__ = APP_VERSION
         self.__author__ = APP_AUTHOR
         self.__copyright__ = "Copyright (c){0} {1}".format(

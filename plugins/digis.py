@@ -68,6 +68,13 @@ class Digis(Plugin):
 
         await self.bot.send_message(message.channel, response)
 
+    @command(pattern='^!version$')
+    async def version(self, message, args):
+        response = "{0}, v{1}".format(
+            self.bot.__name__, self.bot.__version__
+        )
+        await self.bot.send_message(message.channel, response)
+
     @command(pattern='^!userinfo #?([0-9]*)$')
     async def user_info(self, message, args):
         user_id = args[0]
