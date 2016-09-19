@@ -61,7 +61,7 @@ class Digis(Plugin):
         return commands
 
     @staticmethod
-    async def _api_get(method, query):
+    async def _api_get(method, query=''):
         with aiohttp.ClientSession() as session:
             async with session.get(API_URL, params={"c": method,
                                                     "s": query,
@@ -331,6 +331,27 @@ class Digis(Plugin):
             response = response_template.format(
                 BASE_URL + "p_help_faq.php"
             )
+
+        await self.bot.send_message(message.channel, response)
+        return
+
+    @command(pattern='^!time')
+    async def time(self, message, args):
+        data = await self._api_get('time')
+
+        response_template = "The current Digis time is `{}`"
+
+        if data['success'] is False:
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
+            await self.bot.send_message(message.channel, response)
+            return
+        result = data['result']
+
+        response = response_template.format(
+            result['time']
+        )
 
         await self.bot.send_message(message.channel, response)
         return
