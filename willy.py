@@ -2,6 +2,10 @@ import discord
 import logging
 from plugin_manager import PluginManager
 
+APP_NAME = "Willy Bot"
+APP_VERSION = "1.0.2"
+APP_AUTHOR = "Alex Schaeffer"
+
 log = logging.getLogger('discord')
 
 
@@ -11,13 +15,17 @@ class Willy(discord.Client):
         self.plugin_manager = PluginManager(self)
         self.plugin_manager.load_all()
         self.last_messages = []
+        self.__name__ = APP_NAME
+        self.__version__ = APP_VERSION
+        self.__author__ = APP_AUTHOR
+        self.__copyright__ = "Copyright (c){0} {1}".format(
+            2016, self.__author__
+        )
 
     def run(self, *args):
         self.loop.run_until_complete(self.start(*args))
 
     async def on_ready(self):
-        log.info('Connected to the database')
-
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_ready())
 

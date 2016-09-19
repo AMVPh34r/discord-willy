@@ -2,18 +2,20 @@ import aiohttp
 import os
 from plugin import Plugin
 from decorators import command
-from bs4 import BeautifulSoup
 
 API_KEY = os.getenv('DIGIS_API_KEY')
 BASE_URL = 'http://yaydigis.net/'
 CDN_URL = 'http://cdn.yaydigis.net/'
-API_URL = BASE_URL + 'api.php?key=' + API_KEY + '&'
+API_URL = '{0}api.php?key={1}&'.format(
+    BASE_URL, API_KEY
+)
 
 
 class Digis(Plugin):
-    fancy_name='Digis API'
+    fancy_name = 'Digis API'
 
-    async def get_commands(self, server):
+    @staticmethod
+    async def get_commands(server):
         commands = [
             {
                 'name': '!info',
@@ -42,11 +44,24 @@ class Digis(Plugin):
             {
                 'name': '!colorsearch query',
                 'description': 'Search for colorations with names containing your query'
+            },
+            {
+                'name': '!itemcount item_id',
+                'description': 'See how many of a given item exist across Digis users'
+            },
+            {
+                'name': '!rules',
+                'description': 'Get a quick link to the Digis rules and ToS'
+            },
+            {
+                'name': '!faq [topic]',
+                'description': 'Get an answer to a frequently asked question, or a link to the online FAQ page'
             }
         ]
         return commands
 
-    async def _api_get(self, method, query):
+    @staticmethod
+    async def _api_get(method, query):
         with aiohttp.ClientSession() as session:
             async with session.get(API_URL, params={"c": method,
                                                     "s": query,
@@ -54,37 +69,20 @@ class Digis(Plugin):
                 data = await resp.json()
         return data
 
-    @command(pattern='^!info$')
-    async def info(self, message, args):
-        response = "Hi! I'm Digi Land's very own Willy! I decided to join the Discord server here in order to help " + \
-                   "out with some tasks and provide quick access to information on the world of Digis right here!" + \
-                   "\n\nHere's a quick rundown of what I can do now (and I'm always learning new tricks):\n"
-        response += "`!userinfo USER_ID` Give me the ID number of a Digis user and I can display some basic " + \
-                    "profile information about them, as well as some helpful links. Not sure what a user's ID is? " +\
-                    "Don't worry!\n"
-        response += "`!usersearch QUERY` Give me all or part of someone's username and I can fetch their ID for you!\n"
-        response += "`!iteminfo ITEM_ID` Given an item's ID, I'll display that item's name and information!\n"
-        response += "`!itemsearch QUERY` Just like with users, I can help you track down an item if you don't know " + \
-                    "its ID or full name!\n"
-        response += "`!colorinfo COLOR_ID` Want to see how a certain pet coloration looks? Just holler and I'll " + \
-                    "give you some beautiful pictures as well as information on the coloration of your choice!\n"
-        response += "`!colorsearch QUERY` And of course if you don't know the coloration's ID off the top of your " + \
-                    "head (I certainly don't blame you), I can help you find it here!"
-
-        await self.bot.send_message(message.channel, response)
-
     @command(pattern='^!userinfo #?([0-9]*)$')
     async def user_info(self, message, args):
         user_id = args[0]
         data = await self._api_get('userinfo', user_id)
 
-        response_template = "Info for user #{0}:\n" +\
-            "**Username:** {1}\n" + \
-            "**Profile Link:** {2}p_user_profile.php?ID={3}\n" + \
-            "**Forum Posts:** {2}forum_history_user.php?ID={3}"
+        response_template = "Here's what I could dig up on user #{0}:\n" \
+                            "**Username:** {1}\n" \
+                            "**Profile Link:** {2}p_user_profile.php?ID={3}\n" \
+                            "**Forum Posts:** {2}forum_history_user.php?ID={3}"
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -101,12 +99,14 @@ class Digis(Plugin):
         query = args[0]
         data = await self._api_get('usersearch', query)
 
-        response_template = "{0} results for \"{1}\"{2}"
+        response_template = "I found {0} results for \"{1}\"{2}"
         result_template = "    {0} (#{1})\n"
-        info_template = "Enter `!userinfo USER_ID` for more."
+        info_template = "Tell me `!userinfo USER_ID` if you want more info!"
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -128,13 +128,15 @@ class Digis(Plugin):
         item_id = args[0]
         data = await self._api_get('iteminfo', item_id)
 
-        response_template = "__{0}__\n" +\
-            "**Item Description:** {1}\n" +\
-            "**Artist:** {2} (#{3})\n" +\
-            "**Price:** {4}{5}"
+        response_template = "__{0}__\n" \
+                            "**Item Description:** {1}\n" \
+                            "**Artist:** {2} (#{3})\n" \
+                            "**Price:** {4}{5}"
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -152,12 +154,14 @@ class Digis(Plugin):
         query = args[0]
         data = await self._api_get('itemsearch', query)
 
-        response_template = "{0} results for \"{1}\"{2}"
+        response_template = "I've got {0} results for \"{1}\"{2}"
         result_template = "    {0} (#{1})\n"
-        info_template = "Enter `!iteminfo ITEM_ID` for more."
+        info_template = "Send `!iteminfo ITEM_ID` for more."
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -185,15 +189,17 @@ class Digis(Plugin):
             'C': 'Coffee',
             'Z': 'Zafrii'
         }
-        response_template = "__{0}__\n" +\
-            "**Species:** {1}\n" +\
-            "**Artist:** {2} (#{3})\n" +\
-            "**Images:** \n" +\
-            "{4}pets/pet_{5}Fb.png\n" +\
-            "{4}pets/pet_{5}Mb.png"
+        response_template = "__{0}__\n" \
+                            "**Species:** {1}\n" \
+                            "**Artist:** {2} (#{3})\n" \
+                            "**Images:** \n" \
+                            "{4}pets/pet_{5}Fb.png\n" \
+                            "{4}pets/pet_{5}Mb.png"
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -211,12 +217,14 @@ class Digis(Plugin):
         query = args[0]
         data = await self._api_get('colorsearch', query)
 
-        response_template = "{0} results for \"{1}\"{2}"
+        response_template = "Looks like we have {0} results for \"{1}\"{2}"
         result_template = "    {0} (#{1})\n"
-        info_template = "Enter `!colorinfo COLOR_ID` for more."
+        info_template = "Tell me `!colorinfo COLOR_ID` for more info!"
 
         if data['success'] is False:
-            response = "Error" + (": `" + data['message'] + "`" if data['message'] else "")
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
             await self.bot.send_message(message.channel, response)
             return
         result = data['result']
@@ -230,5 +238,90 @@ class Digis(Plugin):
             )
         if len(result) > 0:
             response += info_template
+
+        await self.bot.send_message(message.channel, response)
+
+    @command(pattern='^!itemcount #?([0-9]*)$')
+    async def item_count(self, message, args):
+        item_id = args[0]
+        data = await self._api_get('itemcount', item_id)
+
+        response_template = "Hmm... let's see...\n" \
+                            "I found {0} {1}{2} among all users!"
+
+        if data['success'] is False:
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
+            await self.bot.send_message(message.channel, response)
+            return
+        result = data['result']
+        response = response_template.format(
+            result['num_items'], result['iName'], "'" if result['iName'].endswith('s') else "s"
+        )
+
+        await self.bot.send_message(message.channel, response)
+
+    @command(pattern='^!rules$')
+    async def rules(self, message, args):
+        response_template = "Don't forget to read up on the Digis rules and ToS!\n" +\
+            "{0}\n" +\
+            "{1}"
+        response = response_template.format(
+            BASE_URL + "p_rules.php",
+            BASE_URL + "p_ToS.php"
+        )
+
+        await self.bot.send_message(message.channel, response)
+
+    @command(pattern='^!faq ?(.*)$')
+    async def faq(self, message, args):
+        question = args[0].lower()
+
+        faqs = {
+            "trading": "Digi trading costs `{0} GCC` for a standard trade and `{1} GCC` for a one-way trade.".format(
+                "500", "12.5k"
+            ),
+            "fotm": "You can check out this month's flavor of the month and buy items here:\n{0}".format(
+                BASE_URL + "p_item_buy.php"
+            ),
+            "dailies": "Looking for free stuff? Check out our dailies once per day!\n{0}".format(
+                BASE_URL + "p_help_dg_dailies.php"
+            ),
+            "interest": "Bank interest rates begin at `{0}%`, and decrease for higher bank balances, to a minimum "
+                        "of `{1}%`.".format(
+                8, 4
+            ),
+            "staff": "Here's a list of all the current Digis staff members! Aren't they all wonderful?\n{0}".format(
+                BASE_URL + "p_staff.php"
+            ),
+            "news": "Check out the latest Digis news updates!\n{0}".format(
+                BASE_URL + "p_news.php"
+            ),
+            "petprices": "Pets start at `{0} GCC`, and the price increases as you obtain more pets. The equation for "
+                         "pet cost is `{1}`, and there is a cap of `{2} GCC`.".format(
+                200, "(D²+1)*200", "20k"
+            ),
+            "botidea": "Got a feature idea or request for the bot? Let us know via the GitHub issue tracker!\n"
+                       "{0}".format(
+                "https://github.com/AMVPh34r/discord-willy/issues"
+            )
+        }
+
+        if question == "":
+            response = "Here's a list of FAQ topics I can tell you about (just send me `!faq topic` for more):\n" \
+                       "`{0}`\n" \
+                       "You can read up on the site FAQ here: {1}".format(
+                            ', '.join(sorted(faqs.keys())),
+                            BASE_URL + "p_help_faq.php"
+                        )
+        elif question in faqs.keys():
+            response = faqs[question]
+        else:
+            response_template = "Sorry! I couldn't find an answer for you. You might have better luck reading " \
+                                "through the FAQ page online: {0}"
+            response = response_template.format(
+                BASE_URL + "p_help_faq.php"
+            )
 
         await self.bot.send_message(message.channel, response)

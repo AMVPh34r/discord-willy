@@ -1,15 +1,13 @@
 from plugin import Plugin
 import logging
-import asyncio
 
 logs = logging.getLogger('discord')
 
-class BasicLogs(Plugin):
 
+class BasicLogs(Plugin):
     is_global = True
 
     async def on_message(self, message):
-        # Logs all the bot's messages
         if message.author.id == self.bot.user.id:
             server, channel = message.server, message.channel
             logs.info("OUT >> {}#{} >> {}".format(
@@ -17,5 +15,3 @@ class BasicLogs(Plugin):
                 channel.name,
                 message.clean_content.replace('\n', '~')
             ))
-
-
