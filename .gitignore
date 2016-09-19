@@ -1,4 +1,5 @@
 .idea/
+logs/
 pyvenv.cfg
 discord.log
 *.pyc
