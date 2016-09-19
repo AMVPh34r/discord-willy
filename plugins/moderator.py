@@ -8,6 +8,7 @@ logs = logging.getLogger("discord")
 
 class Moderator(Plugin):
     fancy_name = "Moderator Commands"
+
     @staticmethod
     async def get_commands(server):
         commands = [

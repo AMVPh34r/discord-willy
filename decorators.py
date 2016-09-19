@@ -40,6 +40,7 @@ def command(pattern=None, db_check=False, user_check=None, db_name=None,
         name = func.__name__
         cmd_name = "!" + name
         prog = re.compile(pattern or cmd_name)
+
         @wraps(func)
         async def wrapper(self, message):
 
