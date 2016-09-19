@@ -18,8 +18,16 @@ class Digis(Plugin):
     async def get_commands(server):
         commands = [
             {
-                'name': '!info',
-                'description': 'Display bot info'
+                'name': '!time',
+                'description': 'Shows the current Digis server time'
+            },
+            {
+                'name': '!rules',
+                'description': 'Get a quick link to the Digis rules and ToS'
+            },
+            {
+                'name': '!faq [topic]',
+                'description': 'Get an answer to a frequently asked question, or a link to the online FAQ page'
             },
             {
                 'name': '!userinfo user_id',
@@ -38,28 +46,16 @@ class Digis(Plugin):
                 'description': 'Search for items with names containing your query'
             },
             {
+                'name': '!itemcount item_id',
+                'description': 'See how many of a given item exist across Digis users'
+            },
+            {
                 'name': '!colorinfo color_id',
                 'description': 'Show basic info on the coloration with the given ID'
             },
             {
                 'name': '!colorsearch query',
                 'description': 'Search for colorations with names containing your query'
-            },
-            {
-                'name': '!itemcount item_id',
-                'description': 'See how many of a given item exist across Digis users'
-            },
-            {
-                'name': '!rules',
-                'description': 'Get a quick link to the Digis rules and ToS'
-            },
-            {
-                'name': '!faq [topic]',
-                'description': 'Get an answer to a frequently asked question, or a link to the online FAQ page'
-            },
-            {
-                'name': '!time',
-                'description': 'Shows the current Digis server time'
             },
             {
                 'name': '!fotm',
