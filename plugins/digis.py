@@ -2,7 +2,6 @@ import aiohttp
 import os
 from plugin import Plugin
 from decorators import command
-from bs4 import BeautifulSoup
 
 API_KEY = os.getenv('DIGIS_API_KEY')
 BASE_URL = 'http://yaydigis.net/'
@@ -49,6 +48,14 @@ class Digis(Plugin):
             {
                 'name': '!itemcount item_id',
                 'description': 'See how many of a given item exist across Digis users'
+            },
+            {
+                'name': '!rules',
+                'description': 'Get a quick link to the Digis rules and ToS'
+            },
+            {
+                'name': '!faq [topic]',
+                'description': 'Get an answer to a frequently asked question, or a link to the online FAQ page'
             }
         ]
         return commands
@@ -252,5 +259,69 @@ class Digis(Plugin):
         response = response_template.format(
             result['num_items'], result['iName'], "'" if result['iName'].endswith('s') else "s"
         )
+
+        await self.bot.send_message(message.channel, response)
+
+    @command(pattern='^!rules$')
+    async def rules(self, message, args):
+        response_template = "Don't forget to read up on the Digis rules and ToS!\n" +\
+            "{0}\n" +\
+            "{1}"
+        response = response_template.format(
+            BASE_URL + "p_rules.php",
+            BASE_URL + "p_ToS.php"
+        )
+
+        await self.bot.send_message(message.channel, response)
+
+    @command(pattern='^!faq ?(.*)$')
+    async def faq(self, message, args):
+        question = args[0].lower()
+
+        faqs = {
+            "trading": "Digi trading costs {0} GCC for a standard trade and {1} GCC for a one-way trade.".format(
+                "500", "12.5k"
+            ),
+            "fotm": "You can check out this month's flavor of the month and buy items here:\n{0}".format(
+                BASE_URL + "p_item_buy.php"
+            ),
+            "dailies": "Looking for free stuff? Check out our dailies once per day!\n{0}".format(
+                BASE_URL + "p_help_dg_dailies.php"
+            ),
+            "interest": "Bank interest rates begin at {0}%, and decrease for higher bank balances, to a minimum "
+                        "of {1}%.".format(
+                8, 4
+            ),
+            "staff": "Here's a list of all the current Digis staff members! Aren't they all wonderful?\n{0}".format(
+                BASE_URL + "p_staff.php"
+            ),
+            "news": "Check out the latest Digis news updates!\n{0}".format(
+                BASE_URL + "p_news.php"
+            ),
+            "petprices": "Pets start at {0} GCC, and the price increases as you obtain more pets. The equation for pet "
+                         "cost is `{1}`, and there is a cap of {2} GCC.".format(
+                200, "(D²+1)*200", "20k"
+            ),
+            "botidea": "Got a feature idea or request for the bot? Let us know via the GitHub issue tracker!\n"
+                       "{0}".format(
+                "https://github.com/AMVPh34r/discord-willy/issues"
+            )
+        }
+
+        if question == "":
+            response = "Here's a list of FAQ topics I can tell you about (just send me `!faq topic` for more):\n" \
+                       "`{0}`\n" \
+                       "You can read up on the site FAQ here: {1}".format(
+                            ', '.join(sorted(faqs.keys())),
+                            BASE_URL + "p_help_faq.php"
+                        )
+        elif question in faqs.keys():
+            response = faqs[question]
+        else:
+            response_template = "Sorry! I couldn't find an answer for you. You might have better luck reading " \
+                                "through the FAQ page online: {0}"
+            response = response_template.format(
+                BASE_URL + "p_help_faq.php"
+            )
 
         await self.bot.send_message(message.channel, response)
