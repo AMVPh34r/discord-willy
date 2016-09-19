@@ -61,7 +61,7 @@ class Digis(Plugin):
         return commands
 
     @staticmethod
-    async def _api_get(method, query):
+    async def _api_get(method, query=''):
         with aiohttp.ClientSession() as session:
             async with session.get(API_URL, params={"c": method,
                                                     "s": query,
@@ -146,7 +146,7 @@ class Digis(Plugin):
             result['iName'],
             result['iDesc'],
             result['artistname'], result['artist'],
-            result['price'], "GCC" if result['price'] is not None else ""
+            result['price'], " GCC" if result['price'] is not None else ""
         )
 
         await self.bot.send_message(message.channel, response)
@@ -331,6 +331,70 @@ class Digis(Plugin):
             response = response_template.format(
                 BASE_URL + "p_help_faq.php"
             )
+
+        await self.bot.send_message(message.channel, response)
+        return
+
+    @command(pattern='^!time')
+    async def time(self, message, args):
+        data = await self._api_get('time')
+
+        response_template = "The current Digis time is `{}`"
+
+        if data['success'] is False:
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
+            await self.bot.send_message(message.channel, response)
+            return
+        result = data['result']
+
+        response = response_template.format(
+            result['time']
+        )
+
+        await self.bot.send_message(message.channel, response)
+        return
+
+    @command(pattern='^!fotm')
+    async def fotm(self, message, args):
+        data = await self._api_get('fotm')
+
+        response_template = "Here's {month}'s FotM!\n" \
+                            "__{name} (#{id})__\n" \
+                            "**Potion:** {potion} (#{potion_id})\n" \
+                            "**Items:**\n" \
+                            "    {item1} (#{item1_id})\n" \
+                            "    {item2} (#{item2_id})\n" \
+                            "**Image:** {img_url}.jpg\n" \
+                            "Want to buy? Check out our FotM and IRL shops!\n" \
+                            "    {fotm_shop_url}\n" \
+                            "    {irl_shop_url}"
+
+        if data['success'] is False:
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
+            await self.bot.send_message(message.channel, response)
+            return
+        result = data['result']
+
+        response = response_template.format(
+            month=result['month_name'],
+            name=result['name'], id=result['colorId'],
+            potion=result['potionName'], potion_id=result['potionId'],
+            item1=result['item1Name'], item1_id=result['item1Id'],
+            item2=result['item2Name'], item2_id=result['item2Id'],
+            img_url="{}news/img/fotm/{}.jpg".format(
+                BASE_URL, result['fotm_image']
+            ),
+            fotm_shop_url="{}p_item_buy.php".format(
+                BASE_URL
+            ),
+            irl_shop_url="{}p_shop_irl.php".format(
+                BASE_URL
+            )
+        )
 
         await self.bot.send_message(message.channel, response)
         return
