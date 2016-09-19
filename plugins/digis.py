@@ -279,7 +279,7 @@ class Digis(Plugin):
         question = args[0].lower()
 
         faqs = {
-            "trading": "Digi trading costs {0} GCC for a standard trade and {1} GCC for a one-way trade.".format(
+            "trading": "Digi trading costs `{0} GCC` for a standard trade and `{1} GCC` for a one-way trade.".format(
                 "500", "12.5k"
             ),
             "fotm": "You can check out this month's flavor of the month and buy items here:\n{0}".format(
@@ -288,8 +288,8 @@ class Digis(Plugin):
             "dailies": "Looking for free stuff? Check out our dailies once per day!\n{0}".format(
                 BASE_URL + "p_help_dg_dailies.php"
             ),
-            "interest": "Bank interest rates begin at {0}%, and decrease for higher bank balances, to a minimum "
-                        "of {1}%.".format(
+            "interest": "Bank interest rates begin at `{0}%`, and decrease for higher bank balances, to a minimum "
+                        "of `{1}%`.".format(
                 8, 4
             ),
             "staff": "Here's a list of all the current Digis staff members! Aren't they all wonderful?\n{0}".format(
@@ -298,8 +298,8 @@ class Digis(Plugin):
             "news": "Check out the latest Digis news updates!\n{0}".format(
                 BASE_URL + "p_news.php"
             ),
-            "petprices": "Pets start at {0} GCC, and the price increases as you obtain more pets. The equation for pet "
-                         "cost is `{1}`, and there is a cap of {2} GCC.".format(
+            "petprices": "Pets start at `{0} GCC`, and the price increases as you obtain more pets. The equation for "
+                         "pet cost is `{1}`, and there is a cap of `{2} GCC`.".format(
                 200, "(D²+1)*200", "20k"
             ),
             "botidea": "Got a feature idea or request for the bot? Let us know via the GitHub issue tracker!\n"
