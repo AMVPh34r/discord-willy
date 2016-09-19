@@ -12,7 +12,7 @@ class ServerLogs(Plugin):
         if not LOG_DIR:
             return
 
-        log_msg = "{0} - {1}: {2}".format(
+        log_msg = "{} - {}: {}".format(
             message.timestamp.strftime(
                 '%H:%M:%S'
             ), message.author.name, message.content

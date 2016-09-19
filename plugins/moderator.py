@@ -167,7 +167,7 @@ class Moderator(Plugin):
                 await self.bot.send_message(
                     message.author,
                     "Sorry! Your message was removed for containing a word in our filter. Here's what you wrote, in "
-                    "case you would like to edit and re-send it:\n```\n{0}\n```".format(
+                    "case you would like to edit and re-send it:\n```\n{}\n```".format(
                         message.content
                     )
                 )
