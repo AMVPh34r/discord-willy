@@ -366,7 +366,10 @@ class Digis(Plugin):
                             "**Items:**\n" \
                             "    {item1} (#{item1_id})\n" \
                             "    {item2} (#{item2_id})\n" \
-                            "**Image:** {url}news/img/fotm/{img}.jpg"
+                            "**Image:** {img_url}.jpg\n" \
+                            "Want to buy? Check out our FotM and IRL shops!\n" \
+                            "    {fotm_shop_url}\n" \
+                            "    {irl_shop_url}"
 
         if data['success'] is False:
             response = "Error{0}".format(
@@ -382,7 +385,15 @@ class Digis(Plugin):
             potion=result['potionName'], potion_id=result['potionId'],
             item1=result['item1Name'], item1_id=result['item1Id'],
             item2=result['item2Name'], item2_id=result['item2Id'],
-            url=BASE_URL, img=result['fotm_image']
+            img_url="{}news/img/fotm/{}.jpg".format(
+                BASE_URL, result['fotm_image']
+            ),
+            fotm_shop_url="{}p_item_buy.php".format(
+                BASE_URL
+            ),
+            irl_shop_url="{}p_shop_irl.php".format(
+                BASE_URL
+            )
         )
 
         await self.bot.send_message(message.channel, response)
