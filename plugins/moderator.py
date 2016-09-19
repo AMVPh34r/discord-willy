@@ -30,7 +30,7 @@ class Moderator(Plugin):
     @staticmethod
     async def check_auth(member):
         # Check if the author if authorized
-        role_names = ['moderator']
+        role_names = ['admin', 'moderator']
         authorized = False
         for role in member.roles:
             authorized = any([role.name in role_names,
