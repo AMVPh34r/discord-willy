@@ -56,6 +56,14 @@ class Digis(Plugin):
             {
                 'name': '!faq [topic]',
                 'description': 'Get an answer to a frequently asked question, or a link to the online FAQ page'
+            },
+            {
+                'name': '!time',
+                'description': 'Shows the current Digis server time'
+            },
+            {
+                'name': '!fotm',
+                'description': 'Get info on the current Flavor of the Month coloration'
             }
         ]
         return commands
