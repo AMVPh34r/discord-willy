@@ -355,3 +355,35 @@ class Digis(Plugin):
 
         await self.bot.send_message(message.channel, response)
         return
+
+    @command(pattern='^!fotm')
+    async def fotm(self, message, args):
+        data = await self._api_get('fotm')
+
+        response_template = "Here's {month}'s FotM!\n" \
+                            "__{name} (#{id})__\n" \
+                            "**Potion:** {potion} (#{potion_id})\n" \
+                            "**Items:**\n" \
+                            "    {item1} (#{item1_id})\n" \
+                            "    {item2} (#{item2_id})\n" \
+                            "**Image:** {url}news/img/fotm/{img}.jpg"
+
+        if data['success'] is False:
+            response = "Error{0}".format(
+                ": `{}`".format(data['message']) if data['message'] else ""
+            )
+            await self.bot.send_message(message.channel, response)
+            return
+        result = data['result']
+
+        response = response_template.format(
+            month=result['month_name'],
+            name=result['name'], id=result['colorId'],
+            potion=result['potionName'], potion_id=result['potionId'],
+            item1=result['item1Name'], item1_id=result['item1Id'],
+            item2=result['item2Name'], item2_id=result['item2Id'],
+            url=BASE_URL, img=result['fotm_image']
+        )
+
+        await self.bot.send_message(message.channel, response)
+        return
