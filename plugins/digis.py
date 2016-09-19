@@ -146,7 +146,7 @@ class Digis(Plugin):
             result['iName'],
             result['iDesc'],
             result['artistname'], result['artist'],
-            result['price'], "GCC" if result['price'] is not None else ""
+            result['price'], " GCC" if result['price'] is not None else ""
         )
 
         await self.bot.send_message(message.channel, response)
