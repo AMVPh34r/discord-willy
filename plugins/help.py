@@ -71,3 +71,4 @@ class Help(Plugin):
             destination = message.channel
             for msg in help_messages:
                 await self.bot.send_message(destination, msg)
+        return

@@ -15,3 +15,4 @@ class BasicLogs(Plugin):
                 channel.name,
                 message.clean_content.replace('\n', '~')
             ))
+        return

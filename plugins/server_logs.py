@@ -11,7 +11,7 @@ class ServerLogs(Plugin):
     async def on_message(self, message):
         if not LOG_DIR:
             return
-        
+
         log_msg = "{0} - {1}: {2}".format(
             message.timestamp.strftime(
                 '%H:%M:%S'
@@ -41,3 +41,4 @@ class ServerLogs(Plugin):
             log_file.write("{}\n".format(
                 log_msg
             ))
+        return

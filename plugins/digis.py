@@ -93,6 +93,7 @@ class Digis(Plugin):
         )
 
         await self.bot.send_message(message.channel, response)
+        return
 
     @command(pattern='^!usersearch (.*)$')
     async def user_search(self, message, args):
@@ -122,6 +123,7 @@ class Digis(Plugin):
             response += info_template
 
         await self.bot.send_message(message.channel, response)
+        return
 
     @command(pattern='^!iteminfo #?([0-9]*)$')
     async def item_info(self, message, args):
@@ -148,6 +150,7 @@ class Digis(Plugin):
         )
 
         await self.bot.send_message(message.channel, response)
+        return
 
     @command(pattern='^!itemsearch (.*)$')
     async def item_search(self, message, args):
@@ -177,6 +180,7 @@ class Digis(Plugin):
             response += info_template
 
         await self.bot.send_message(message.channel, response)
+        return
 
     @command(pattern='^!colorinfo #?([0-9]*)$')
     async def color_info(self, message, args):
@@ -211,6 +215,7 @@ class Digis(Plugin):
         )
 
         await self.bot.send_message(message.channel, response)
+        return
 
     @command(pattern='^!colorsearch (.*)$')
     async def color_search(self, message, args):
@@ -240,6 +245,7 @@ class Digis(Plugin):
             response += info_template
 
         await self.bot.send_message(message.channel, response)
+        return
 
     @command(pattern='^!itemcount #?([0-9]*)$')
     async def item_count(self, message, args):
@@ -261,6 +267,7 @@ class Digis(Plugin):
         )
 
         await self.bot.send_message(message.channel, response)
+        return
 
     @command(pattern='^!rules$')
     async def rules(self, message, args):
@@ -273,6 +280,7 @@ class Digis(Plugin):
         )
 
         await self.bot.send_message(message.channel, response)
+        return
 
     @command(pattern='^!faq ?(.*)$')
     async def faq(self, message, args):
@@ -325,3 +333,4 @@ class Digis(Plugin):
             )
 
         await self.bot.send_message(message.channel, response)
+        return

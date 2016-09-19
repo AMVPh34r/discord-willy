@@ -26,6 +26,7 @@ class Info(Plugin):
                    "\n\nWant to know what I'm capable of? Just enter `!help` for a list of commands I know!\n"
 
         await self.bot.send_message(message.channel, response)
+        return
 
     @command(pattern='^!version$')
     async def version(self, message, args):
@@ -33,3 +34,4 @@ class Info(Plugin):
             self.bot.__name__, self.bot.__version__
         )
         await self.bot.send_message(message.channel, response)
+        return
