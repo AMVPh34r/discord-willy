@@ -1,5 +1,6 @@
 from plugin import Plugin
 import logging
+import re
 
 log = logging.getLogger('discord')
 
@@ -22,6 +23,8 @@ async def get_help_info(self, server):
 
 
 class Help(Plugin):
+    regex = r'^!(help|commands|cmds)$'
+
     def __init__(self, *args, **kwargs):
         Plugin.__init__(self, *args, **kwargs)
         # Patch the Plugin class
@@ -58,7 +61,7 @@ class Help(Plugin):
         return message_batches
 
     async def on_message(self, message):
-        if message.content == '!help':
+        if re.search(self.regex, message.content):
             log.info('{}#{}@{} >> !help'.format(
                 message.author.name,
                 message.author.discriminator,
