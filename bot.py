@@ -6,7 +6,7 @@ from plugins.help import Help
 from plugins.info import Info
 from plugins.digis import Digis
 from plugins.moderator import Moderator
-# from plugins.server_logs import ServerLogs
+from plugins.server_logs import ServerLogs
 
 # Global plugins
 from plugins.basiclogs import BasicLogs
