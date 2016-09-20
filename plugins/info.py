@@ -30,8 +30,6 @@ class Info(Plugin):
 
     @command(pattern='^!version$')
     async def version(self, message, args):
-        response = "{}, v{}".format(
-            self.bot.__name__, self.bot.__version__
-        )
+        response = "{}, v{}".format(self.bot.__name__, self.bot.__version__)
         await self.bot.send_message(message.channel, response)
         return
