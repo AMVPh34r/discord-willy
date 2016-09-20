@@ -3,7 +3,7 @@ import logging
 from plugin_manager import PluginManager
 
 APP_NAME = "Willy Bot"
-APP_VERSION = "1.0.2"
+APP_VERSION = "1.0.3"
 APP_AUTHOR = "Alex Schaeffer"
 
 log = logging.getLogger('discord')
