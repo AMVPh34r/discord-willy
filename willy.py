@@ -3,7 +3,7 @@ import logging
 from plugin_manager import PluginManager
 
 APP_NAME = "Willy Bot"
-APP_VERSION = "1.0.2"
+APP_VERSION = "1.0.3"
 APP_AUTHOR = "Alex Schaeffer"
 
 log = logging.getLogger('discord')
@@ -19,7 +19,8 @@ class Willy(discord.Client):
         self.__version__ = APP_VERSION
         self.__author__ = APP_AUTHOR
         self.__copyright__ = "Copyright (c){} {}".format(
-            2016, self.__author__
+            2016,
+            self.__author__
         )
 
     def run(self, *args):

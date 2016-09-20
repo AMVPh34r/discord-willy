@@ -6,9 +6,7 @@ from decorators import command
 API_KEY = os.getenv('DIGIS_API_KEY')
 BASE_URL = 'http://yaydigis.net/'
 CDN_URL = 'http://cdn.yaydigis.net/'
-API_URL = '{}api.php?key={}&'.format(
-    BASE_URL, API_KEY
-)
+API_URL = '{}api.php?key={}&'.format(BASE_URL, API_KEY)
 
 
 class Digis(Plugin):
@@ -332,9 +330,7 @@ class Digis(Plugin):
         else:
             response_template = "Sorry! I couldn't find an answer for you. You might have better luck reading " \
                                 "through the FAQ page online: {}"
-            response = response_template.format(
-                BASE_URL + "p_help_faq.php"
-            )
+            response = response_template.format(BASE_URL + "p_help_faq.php")
 
         await self.bot.send_message(message.channel, response)
         return
@@ -353,9 +349,7 @@ class Digis(Plugin):
             return
         result = data['result']
 
-        response = response_template.format(
-            result['time']
-        )
+        response = response_template.format(result['time'])
 
         await self.bot.send_message(message.channel, response)
         return
@@ -389,15 +383,9 @@ class Digis(Plugin):
             potion=result['potionName'], potion_id=result['potionId'],
             item1=result['item1Name'], item1_id=result['item1Id'],
             item2=result['item2Name'], item2_id=result['item2Id'],
-            img_url="{}news/img/fotm/{}.jpg".format(
-                BASE_URL, result['fotm_image']
-            ),
-            fotm_shop_url="{}p_item_buy.php".format(
-                BASE_URL
-            ),
-            irl_shop_url="{}p_shop_irl.php".format(
-                BASE_URL
-            )
+            img_url="{}news/img/fotm/{}.jpg".format(BASE_URL, result['fotm_image']),
+            fotm_shop_url="{}p_item_buy.php".format(BASE_URL),
+            irl_shop_url="{}p_shop_irl.php".format(BASE_URL)
         )
 
         await self.bot.send_message(message.channel, response)
