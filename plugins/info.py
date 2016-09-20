@@ -19,7 +19,7 @@ class Info(Plugin):
         ]
         return commands
 
-    @command(pattern='^!info$')
+    @command(pattern='^!(info(rmation)?)$')
     async def info(self, message, args):
         response = "Hi! I'm Digi Land's very own Willy! I decided to join the Discord server here in order to help " \
                    "out with some tasks and provide quick access to information on the world of Digis right here!" \
