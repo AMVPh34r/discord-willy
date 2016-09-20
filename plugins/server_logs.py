@@ -11,8 +11,8 @@ class ServerLogs(Plugin):
     async def on_message(self, message):
         if not LOG_DIR:
             return
-        
-        log_msg = "{0} - {1}: {2}".format(
+
+        log_msg = "{} - {}: {}".format(
             message.timestamp.strftime(
                 '%H:%M:%S'
             ), message.author.name, message.content
@@ -26,9 +26,7 @@ class ServerLogs(Plugin):
                 '%Y-%m-%d'
             )
         )
-        log_fname = "{}.txt".format(
-            message.timestamp.strftime('%Y-%m-%d')
-        )
+        log_fname = "{}.txt".format(message.timestamp.strftime('%Y-%m-%d'))
         log_fullpath = "{d}{s}{f}".format(
             d=log_fulldir,
             s=os.sep,
@@ -38,6 +36,5 @@ class ServerLogs(Plugin):
         if not os.path.exists(log_fulldir):
             os.makedirs(log_fulldir)
         with open(log_fullpath, 'a') as log_file:
-            log_file.write("{}\n".format(
-                log_msg
-            ))
+            log_file.write("{}\n".format(log_msg))
+        return

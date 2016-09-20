@@ -66,6 +66,7 @@ class Moderator(Plugin):
         await asyncio.sleep(3)
 
         await self.bot.delete_message(confirm_message)
+        return
 
     @command(pattern='^!clear <@!?([0-9]*)> ([0-9]*)$', require_one_of_roles="roles")
     async def clear_user(self, message, args):
@@ -93,6 +94,7 @@ class Moderator(Plugin):
         )
         await asyncio.sleep(3)
         await self.bot.delete_message(confirm)
+        return
 
     @command(pattern='^!mute <@!?([0-9]*)>$', require_one_of_roles="roles")
     async def mute(self, message, args):
@@ -117,6 +119,7 @@ class Moderator(Plugin):
             message.channel,
             "{} is now muted in this channel.".format(member.mention)
         )
+        return
 
     @command(pattern='^!unmute <@!?([0-9]*)>$', require_one_of_roles="roles")
     async def unmute(self, message, args):
@@ -142,6 +145,7 @@ class Moderator(Plugin):
             message.channel,
             "{} is no longer muted in this channel.".format(member.mention)
         )
+        return
 
     async def banned_words(self, message):
         banned_words = ""
@@ -156,16 +160,12 @@ class Moderator(Plugin):
                 await self.bot.delete_message(message)
                 msg = await self.bot.send_message(
                     message.channel,
-                    "{}, **LANGUAGE!**".format(
-                        message.author.mention
-                    )
+                    "{}, **LANGUAGE!**".format(message.author.mention)
                 )
                 await self.bot.send_message(
                     message.author,
                     "Sorry! Your message was removed for containing a word in our filter. Here's what you wrote, in "
-                    "case you would like to edit and re-send it:\n```\n{0}\n```".format(
-                        message.content
-                    )
+                    "case you would like to edit and re-send it:\n```\n{}\n```".format(message.content)
                 )
                 await asyncio.sleep(3)
                 await self.bot.delete_message(msg)
@@ -173,8 +173,10 @@ class Moderator(Plugin):
 
     async def on_message_edit(self, before, after):
         await self.banned_words(after)
+        return
 
     async def on_message(self, message):
         if message.author.id == self.bot.user.id:
             return
         await self.banned_words(message)
+        return
