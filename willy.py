@@ -38,9 +38,6 @@ class Willy(discord.Client):
         return await super().send_message(*args, **kwargs)
 
     async def on_message(self, message):
-        if message.channel.is_private:
-            return
-
         server = message.server
 
         enabled_plugins = await self.get_plugins(server)

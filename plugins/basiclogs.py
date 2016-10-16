@@ -11,8 +11,8 @@ class BasicLogs(Plugin):
         if message.author.id == self.bot.user.id:
             server, channel = message.server, message.channel
             logs.info("OUT >> {}#{} >> {}".format(
-                server.name,
-                channel.name,
+                server.name if not message.channel.is_private else "Private Message",
+                channel.name if not message.channel.is_private else message.channel.id,
                 message.clean_content.replace('\n', '~')
             ))
         return

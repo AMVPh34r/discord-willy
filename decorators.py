@@ -35,7 +35,7 @@ def bg_task(sleep_time, ignore_errors=True):
 def command(pattern=None, db_check=False, user_check=None, db_name=None,
             require_role="", require_one_of_roles="", banned_role="",
             banned_roles="", cooldown=0, global_cooldown=0,
-            description="", usage=None):
+            description="", allow_private=False, usage=None):
     def actual_decorator(func):
         name = func.__name__
         cmd_name = "!" + name
@@ -52,6 +52,16 @@ def command(pattern=None, db_check=False, user_check=None, db_name=None,
             args = match.groups()
             server = message.server
             author = message.author
+
+            if message.channel.is_private:
+                if allow_private:
+                    await func(self, message, args)
+                else:
+                    response = "Sorry! That command can't be sent in a private channel."
+                    await self.bot.send_message(message.channel, response)
+                return
+
+
             author_role_ids = [role.id for role in author.roles]
 
             is_admin = any([role.permissions.manage_server

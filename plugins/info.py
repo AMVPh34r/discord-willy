@@ -19,7 +19,7 @@ class Info(Plugin):
         ]
         return commands
 
-    @command(pattern='^!(info(rmation)?)$')
+    @command(pattern='^!(info(rmation)?)$', allow_private=True)
     async def info(self, message, args):
         response = "Hi! I'm Digi Land's very own Willy! I decided to join the Discord server here in order to help " \
                    "out with some tasks and provide quick access to information on the world of Digis right here!" \
@@ -28,7 +28,7 @@ class Info(Plugin):
         await self.bot.send_message(message.channel, response)
         return
 
-    @command(pattern='^!version$')
+    @command(pattern='^!version$', allow_private=True)
     async def version(self, message, args):
         response = "{}, v{}".format(self.bot.__name__, self.bot.__version__)
         await self.bot.send_message(message.channel, response)

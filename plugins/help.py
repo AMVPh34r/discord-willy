@@ -65,7 +65,7 @@ class Help(Plugin):
             log.info('{}#{}@{} >> !help'.format(
                 message.author.name,
                 message.author.discriminator,
-                message.server.name
+                message.server.name if not message.channel.is_private else "Private Channel"
             ))
             server = message.server
             help_messages = await self.generate_help(server)

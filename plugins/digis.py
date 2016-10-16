@@ -71,7 +71,7 @@ class Digis(Plugin):
                 data = await resp.json()
         return data
 
-    @command(pattern='^!userinfo #?([0-9]*)$')
+    @command(pattern='^!userinfo #?([0-9]*)$', allow_private=True)
     async def user_info(self, message, args):
         user_id = args[0]
         data = await self._api_get('userinfo', user_id)
@@ -97,7 +97,7 @@ class Digis(Plugin):
         await self.bot.send_message(message.channel, response)
         return
 
-    @command(pattern='^!usersearch (.*)$')
+    @command(pattern='^!usersearch (.*)$', allow_private=True)
     async def user_search(self, message, args):
         query = args[0]
         data = await self._api_get('usersearch', query)
@@ -127,7 +127,7 @@ class Digis(Plugin):
         await self.bot.send_message(message.channel, response)
         return
 
-    @command(pattern='^!iteminfo #?([0-9]*)$')
+    @command(pattern='^!iteminfo #?([0-9]*)$', allow_private=True)
     async def item_info(self, message, args):
         item_id = args[0]
         data = await self._api_get('iteminfo', item_id)
@@ -154,7 +154,7 @@ class Digis(Plugin):
         await self.bot.send_message(message.channel, response)
         return
 
-    @command(pattern='^!itemsearch (.*)$')
+    @command(pattern='^!itemsearch (.*)$', allow_private=True)
     async def item_search(self, message, args):
         query = args[0]
         data = await self._api_get('itemsearch', query)
@@ -184,7 +184,7 @@ class Digis(Plugin):
         await self.bot.send_message(message.channel, response)
         return
 
-    @command(pattern='^!colorinfo #?([0-9]*)$')
+    @command(pattern='^!colorinfo #?([0-9]*)$', allow_private=True)
     async def color_info(self, message, args):
         color_id = args[0]
         data = await self._api_get('colorinfo', color_id)
@@ -219,7 +219,7 @@ class Digis(Plugin):
         await self.bot.send_message(message.channel, response)
         return
 
-    @command(pattern='^!colorsearch (.*)$')
+    @command(pattern='^!colorsearch (.*)$', allow_private=True)
     async def color_search(self, message, args):
         query = args[0]
         data = await self._api_get('colorsearch', query)
@@ -249,7 +249,7 @@ class Digis(Plugin):
         await self.bot.send_message(message.channel, response)
         return
 
-    @command(pattern='^!itemcount #?([0-9]*)$')
+    @command(pattern='^!itemcount #?([0-9]*)$', allow_private=True)
     async def item_count(self, message, args):
         item_id = args[0]
         data = await self._api_get('itemcount', item_id)
@@ -271,7 +271,7 @@ class Digis(Plugin):
         await self.bot.send_message(message.channel, response)
         return
 
-    @command(pattern='^!rules$')
+    @command(pattern='^!rules$', allow_private=True)
     async def rules(self, message, args):
         response_template = "Don't forget to read up on the Digis rules and ToS!\n" +\
             "{}\n" +\
@@ -284,7 +284,7 @@ class Digis(Plugin):
         await self.bot.send_message(message.channel, response)
         return
 
-    @command(pattern='^!faq ?(.*)$')
+    @command(pattern='^!faq ?(.*)$', allow_private=True)
     async def faq(self, message, args):
         question = args[0].lower()
 
@@ -335,7 +335,7 @@ class Digis(Plugin):
         await self.bot.send_message(message.channel, response)
         return
 
-    @command(pattern='^!time')
+    @command(pattern='^!time', allow_private=True)
     async def time(self, message, args):
         data = await self._api_get('time')
 
@@ -354,7 +354,7 @@ class Digis(Plugin):
         await self.bot.send_message(message.channel, response)
         return
 
-    @command(pattern='^!fotm')
+    @command(pattern='^!fotm', allow_private=True)
     async def fotm(self, message, args):
         data = await self._api_get('fotm')
 
