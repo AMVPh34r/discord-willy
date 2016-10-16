@@ -102,7 +102,7 @@ class Digis(Plugin):
         query = args[0]
         data = await self._api_get('usersearch', query)
 
-        response_template = "I found {} results for \"{}\"{}"
+        response_template = "I found {count} results for \"{query}\"{colon}"
         result_template = "    {name} (#{id})\n"
         info_template = "Tell me `!userinfo USER_ID` if you want more info!"
 
@@ -115,7 +115,7 @@ class Digis(Plugin):
         result = data['result']
 
         response = response_template.format(
-            len(result), query, ":\n" if len(result) > 0 else ""
+            count=len(result), query=query, colon=":\n" if len(result) > 0 else ""
         )
         for user in result:
             response += result_template.format(
@@ -159,8 +159,8 @@ class Digis(Plugin):
         query = args[0]
         data = await self._api_get('itemsearch', query)
 
-        response_template = "I've got {} results for \"{}\"{}"
-        result_template = "    {} (#{})\n"
+        response_template = "I've got {count} results for \"{query}\"{colon}"
+        result_template = "    {name} (#{id})\n"
         info_template = "Send `!iteminfo ITEM_ID` for more."
 
         if data['success'] is False:
@@ -172,11 +172,11 @@ class Digis(Plugin):
         result = data['result']
 
         response = response_template.format(
-            len(result), query, ":\n" if len(result) > 0 else ""
+            count=len(result), query=query, colon=":\n" if len(result) > 0 else ""
         )
         for item in result:
             response += result_template.format(
-                item['iName'], item['itemID']
+                name=item['iName'], id=item['itemID']
             )
         if len(result) > 0:
             response += info_template
@@ -224,8 +224,8 @@ class Digis(Plugin):
         query = args[0]
         data = await self._api_get('colorsearch', query)
 
-        response_template = "Looks like we have {} results for \"{}\"{}"
-        result_template = "    {} (#{})\n"
+        response_template = "Looks like we have {count} results for \"{query}\"{colon}"
+        result_template = "    {name} (#{id})\n"
         info_template = "Tell me `!colorinfo COLOR_ID` for more info!"
 
         if data['success'] is False:
@@ -237,11 +237,11 @@ class Digis(Plugin):
         result = data['result']
 
         response = response_template.format(
-            len(result), query, ":\n" if len(result) > 0 else ""
+            count=len(result), query=query, colon=":\n" if len(result) > 0 else ""
         )
         for color in result:
             response += result_template.format(
-                color['colorName'], color['colorID']
+                name=color['colorName'], id=color['colorID']
             )
         if len(result) > 0:
             response += info_template
@@ -255,7 +255,7 @@ class Digis(Plugin):
         data = await self._api_get('itemcount', item_id)
 
         response_template = "Hmm... let's see...\n" \
-                            "I found {} {}{} among all users!"
+                            "I found {count} {name}{s} among all users!"
 
         if data['success'] is False:
             response = "Error{}".format(
@@ -265,7 +265,7 @@ class Digis(Plugin):
             return
         result = data['result']
         response = response_template.format(
-            result['num_items'], result['iName'], "'" if result['iName'].endswith('s') else "s"
+            count=result['num_items'], name=result['iName'], s="'" if result['iName'].endswith('s') else "s"
         )
 
         await self.bot.send_message(message.channel, response)
