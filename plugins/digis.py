@@ -119,7 +119,7 @@ class Digis(Plugin):
         )
         for user in result:
             response += result_template.format(
-                user['username'], user['userID']
+                name=user['username'], id=user['userID']
             )
         if len(result) > 0:
             response += info_template
